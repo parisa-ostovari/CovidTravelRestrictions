@@ -34,7 +34,10 @@ const sess = {
 };
 
 app.use(session(sess));
-
+// Adding app.engine to use handlebars..might have tpo switch to doing it this way but other way works for now.
+// app.engine('handlebars', hbs.engine);
+app.engine('handlebars', exphbs({ defaultLayout: "main" }));
+app.set('view engine', 'handlebars');
 
 
 app.use(express.json());
