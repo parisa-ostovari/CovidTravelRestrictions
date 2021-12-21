@@ -17,8 +17,8 @@
         <a href="/">Covid Travel Guide</a>
       </h1>
 
-      <nav class="navbar">
-        <a href="/">Home</a> |
+       <nav class="navbar">
+        <a href="/main">Home</a> |
         {{#if logged_in}}
         <a href="/saved-destinations">Saved Destinations</a> |
         <button class="no-button" id="logout">Logout</button>
@@ -34,13 +34,11 @@
         {{{body}}}
       </div>
     </main>
-
+    
   </div>
   
-{{#if logged_in}}
-<script src="/public/js/logout.js"></script>
-{{/if}}
-
 </body>
+
+<script src="/public/js/logout.js"></script>
 
 </html>
