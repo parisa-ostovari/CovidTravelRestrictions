@@ -1,47 +1,32 @@
 const router = require('express').Router();
 const mysql = require('mysql2')
-const { User} = require('../models');
+const { User } = require('../models');
 
 
-router.post('/create', async (req, res) => {
-  try{
-  const dbUser = await User.create({
-    email: req.body.email,
-    password: req.body.password
-  })
-  res.json(dbUser)
-}
-catch(err){
-  res.status(500).json(err)
-}
-})
+// Home page route
+router.get('/', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('homepage');
+});
 
-router.get('/coolkids', async (req, res) => {
+
+// Saved-destination route
+router.get('/saved', async (req, res) => {
   try{
     const dbUserdata = await User.findAll()
     console.log(dbUserdata)
     const userData = dbUserdata.map((user) => {
       return user.get({plain:true})
-      
     })
-    res.json(userData)
-    console.log("shit")
+  res.render('saved', {userData})
   }
   catch(err){
     res.status(500).json(err)
   }
 })
-//db
-// router.get('/get', async (req, res) => {
-//   try{
-   
-  
-//   }
-//   catch(err){
-//     res.status(500).json
-//   }
-// })
-//making third party api calls with proxy server in express.js
 
 // Login route
 router.get('/login', (req, res) => {
@@ -50,6 +35,15 @@ router.get('/login', (req, res) => {
     return;
   }
   res.render('login');
+});
+
+// Signup route
+router.get('/signup', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('signup');
 });
 
 module.exports = router;
