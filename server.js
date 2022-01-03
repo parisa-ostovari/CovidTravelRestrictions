@@ -7,6 +7,7 @@ const routes = require('./controllers');
 // Initializes Sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
+const hbs =  exphbs.create({});
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -14,10 +15,10 @@ const PORT = process.env.PORT || 3001;
 const sess = {
   secret: 'This is a secret',
   cookie: {
-    maxAge: 3600,
-    httpOnly: true,
-    secure: false,
-    sameSite: 'strict',
+    // maxAge: 3600,
+    // httpOnly: true,
+    // secure: false,
+    // sameSite: 'strict',
   },
   resave: false,
   saveUninitialized: true,
@@ -30,7 +31,7 @@ const sess = {
 app.use(session(sess));
 // Adding app.engine to use handlebars..might have to switch to doing it this way but other way works for now.
 // app.engine('handlebars', hbs.engine);
-app.engine('handlebars', exphbs({ defaultLayout: "main" }));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 
