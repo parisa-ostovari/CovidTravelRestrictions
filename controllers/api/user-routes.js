@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Login route
+//login routes
 router.post('/login', async (req, res) => {
   // searching db for user with the inputted email
   try {
