@@ -6,11 +6,13 @@ const { User } = require('../models/');
 
 // Home page route
 router.get('/', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
+ try{
   res.render('homepage');
+
+ }catch(err) {
+   res.status(500).json(err);
+ }
+  
 });
 
 
