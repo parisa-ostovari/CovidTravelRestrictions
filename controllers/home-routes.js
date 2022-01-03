@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const mysql = require('mysql2')
 
-const { User } = require('../models');
+const { User } = require('../models/');
 
 
 // Home page route
@@ -17,9 +17,9 @@ router.get('/', (req, res) => {
 // Saved-destination route
 router.get('/saved', async (req, res) => {
   try{
-    const dbUserdata = await User.findAll()
-    console.log(dbUserdata)
-    const userData = dbUserdata.map((user) => {
+    const dbUserData = await User.findAll()
+    console.log(dbUserData)
+    const userData = dbUserData.map((user) => {
       return user.get({plain:true})
     })
   res.render('saved', {userData})
@@ -35,7 +35,6 @@ router.get('/saved', async (req, res) => {
 router.post('/create', async (req, res) => {
   try{
   const dbUser = await User.create({
-    username: req.body.username,
     email: req.body.email,
     password: req.body.password
   })
@@ -48,7 +47,7 @@ catch(err){
 
 router.get('/get', async (req, res) => {
   try{
-    const dbUserdata = await User.findAll({
+    const dbUserData = await User.findAll({
       include: [
         {
           model: User,
@@ -57,7 +56,7 @@ router.get('/get', async (req, res) => {
       ],
   })
 
-    const userData = dbUserdata.map((users) => {
+    const userData = dbUserData.map((users) => {
       users.get({plain:true})
       
     })
