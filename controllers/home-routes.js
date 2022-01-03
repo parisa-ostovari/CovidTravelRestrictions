@@ -1,72 +1,90 @@
 const router = require('express').Router();
-const mysql = require('mysql2')
-
 const { User } = require('../models/');
 
-
-// Home page route
-router.get('/', (req, res) => {
+// -- Code from 6 to 25 is correct -- //
+// Login route
+router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
     return;
   }
-  res.render('homepage');
+  res.render('login');
 });
 
-
-// Saved-destination route
-router.get('/saved', async (req, res) => {
-  try{
-    const dbUserData = await User.findAll()
-    console.log(dbUserData)
-    const userData = dbUserData.map((user) => {
-      return user.get({plain:true})
-    })
-  res.render('saved', {userData})
+// Signup route
+router.get('/signup', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
   }
-  catch(err){
-    res.status(500).json(err)
-  }
-})
-// new code, another block!!!!! 
+  res.render('signup');
+});
+
+module.exports = router;
 
 
 
-router.post('/create', async (req, res) => {
-  try{
-  const dbUser = await User.create({
-    email: req.body.email,
-    password: req.body.password
-  })
-  res.json(dbUser)
-}
-catch(err){
-  res.status(500).json(err)
-}
-})
+// // Home page route
+// router.get('/', (req, res) => {
+//   if (req.session.loggedIn) {
+//     res.redirect('/');
+//     return;
+//   }
+//   res.render('homepage');
+// });
 
-router.get('/get', async (req, res) => {
-  try{
-    const dbUserData = await User.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'description'],
-        },
-      ],
-  })
 
-    const userData = dbUserData.map((users) => {
-      users.get({plain:true})
+// // Saved-destination route
+// router.get('/saved', async (req, res) => {
+//   try{
+//     const dbUserData = await User.findAll()
+//     console.log(dbUserData)
+//     const userData = dbUserData.map((user) => {
+//       return user.get({plain:true})
+//     })
+//   res.render('saved', {userData})
+//   }
+//   catch(err){
+//     res.status(500).json(err)
+//   }
+// })
+
+
+// router.post('/create', async (req, res) => {
+//   try{
+//   const dbUser = await User.create({
+//     email: req.body.email,
+//     password: req.body.password
+//   })
+//   res.json(dbUser)
+// }
+// catch(err){
+//   res.status(500).json(err)
+// }
+// })
+
+// router.get('/get', async (req, res) => {
+//   try{
+//     const dbUserData = await User.findAll({
+//       include: [
+//         {
+//           model: User,
+//           attributes: ['id', 'description'],
+//         },
+//       ],
+//   })
+
+//     const userData = dbUserData.map((users) => {
+//       users.get({plain:true})
       
-    })
-    return res.json(userData)
-    console.log("shit")
-  }
-  catch(err){
-    res.status(500).json
-  }
-})
+//     })
+//     return res.json(userData)
+//     console.log("shit")
+//   }
+//   catch(err){
+//     res.status(500).json
+//   }
+// })
 
 
 //db
@@ -92,27 +110,3 @@ router.get('/get', async (req, res) => {
 //     res.status(500).json
 //   }
 // })
-
-
-
-
-
-// Login route
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-  res.render('login');
-});
-
-// Signup route
-router.get('/signup', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-  res.render('signup');
-});
-
-module.exports = router;
