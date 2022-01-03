@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const mysql = require('mysql2')
+const { User } = require('../models/');
 
-const { User } = require('../models');
+
 
 
 // Home page route
@@ -16,88 +16,80 @@ router.get('/', (req, res) => {
 
 // Saved-destination route
 router.get('/saved', async (req, res) => {
-  try{
-    const dbUserdata = await User.findAll()
-    console.log(dbUserdata)
-    const userData = dbUserdata.map((user) => {
-      return user.get({plain:true})
+  try {
+    const dbUserData = await User.findAll()
+    console.log(dbUserData)
+    const userData = dbUserData.map((user) => {
+      return user.get({ plain: true })
     })
-  res.render('saved', {userData})
+    res.render('saved', { userData })
   }
-  catch(err){
+  catch (err) {
     res.status(500).json(err)
   }
 })
-// new code, another block!!!!! 
-
 
 
 router.post('/create', async (req, res) => {
-  try{
-  const dbUser = await User.create({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
-  })
-  res.json(dbUser)
-}
-catch(err){
-  res.status(500).json(err)
-}
+  try {
+    const dbUser = await User.create({
+      email: req.body.email,
+      password: req.body.password
+    })
+    res.json(dbUser)
+  }
+  catch (err) {
+    res.status(500).json(err)
+  }
 })
 
 router.get('/get', async (req, res) => {
-  try{
-    const dbUserdata = await User.findAll({
+  try {
+    const dbUserData = await User.findAll({
       include: [
         {
           model: User,
           attributes: ['id', 'description'],
         },
       ],
-  })
+    })
 
-    const userData = dbUserdata.map((users) => {
-      users.get({plain:true})
-      
+    const userData = dbUserData.map((users) => {
+      users.get({ plain: true })
+
     })
     return res.json(userData)
     console.log("shit")
   }
-  catch(err){
+  catch (err) {
     res.status(500).json
   }
 })
 
+router.get('/get', async (req, res) => {
+  try {
+    const db = mysql.createConnection(
+      {
+        host: '127.0.0.1',
+        // MySQL username,
+        user: 'root',
+        // MySQL password
+        password: '',
+        database: 'courses_db'
+      },
+      console.log(`Connected to the courses_db database.`)
+    );
+    db.query('SELECT * FROM course_names', function (err, results) {
+      console.log(results);
+    });
 
-//db
-// router.get('/get', async (req, res) => {
-//   try{
-//     const db = mysql.createConnection(
-//       {
-//         host: '127.0.0.1',
-//         // MySQL username,
-//         user: 'root',
-//         // MySQL password
-//         password: '',
-//         database: 'courses_db'
-//       },
-//       console.log(`Connected to the courses_db database.`)
-//     );
-//     db.query('SELECT * FROM course_names', function (err, results) {
-//       console.log(results);
-//     });
-  
-//   }
-//   catch(err){
-//     res.status(500).json
-//   }
-// })
+  }
+  catch (err) {
+    res.status(500).json
+  }
+})
 
-
-
-
-
+// -- Code from 94 to 113 is correct -- //
 // Login route
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {

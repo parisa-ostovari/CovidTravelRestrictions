@@ -15,6 +15,7 @@ const signupFormHandler = async function(event) {
 
   if (response.ok) {
     document.location.replace('/saved-destinations');
+    // OR alert('Signup successful');
   } else {
     alert('Failed to sign up');
   }
@@ -23,3 +24,31 @@ const signupFormHandler = async function(event) {
 document
   .querySelector('#signup-form')
   .addEventListener('submit', signupFormHandler);
+
+
+
+
+// const signupForm = async (event) => {
+// event.preventDefault();
+
+// const email = document.querySelector('#email-input-signup').value.trim();
+// const password = document.querySelector('#password-input-signup').value.trim();
+
+// if (email && password) {
+//   const response = await fetch('/api/user', {
+//     method: 'POST',
+//     body: JSON.stringify({ email, password }),
+//     headers: { 'Content-Type': 'application/json' },
+//   });
+
+//   if (response.ok) {
+//     alert('Sign up successful.');
+//   } else {
+//     alert('Failed to sign up');
+//   }
+// };
+// };
+
+// document
+//   .querySelector('#signup-form')
+//   .addEventListener('submit', signupForm);

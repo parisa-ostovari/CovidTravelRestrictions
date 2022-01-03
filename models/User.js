@@ -27,7 +27,6 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      isAlphanumeric: true,
       validate: {
         len: [8],
       },
@@ -40,7 +39,7 @@ User.init(
           newUserData.password = await bcrypt.hash(newUserData.password, 8);
           return newUserData;
         } catch(err) {
-          console.log(err);
+          console.log('Password must be more than 8 characters.');
           return err;
         }
       
@@ -54,7 +53,6 @@ User.init(
           return err;
         }
       }
-      
     },
     sequelize,
     timestamps: false,
