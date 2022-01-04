@@ -3,12 +3,15 @@ const path = require('path');
 const axios = require('axios');
 var qs = require('qs');
 
-//data goes to 
+//change id and key to CLIENT_ID & CLIENT_SECRET from .env folder
+//api body parameters
 var data = qs.stringify({
   'grant_type': 'client_credentials',
   'client_id': 'D98xiSbhvHJl5oqdS0MKHsVB5GFmKCHJ',
   'client_secret': 'GHpH5yEpRKqWuuoR' 
 });
+
+//Setting up method, url, headers for api Oauth2.0 request
 var config = {
   method: 'post',
   url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
@@ -18,10 +21,12 @@ var config = {
   data : data
 };
 
+
+//calling API to recieve access token from Amadeus
 axios(config)
 .then(function (response) {
   console.log(JSON.stringify(response.data));
-  console.log(response.data.access_token)
+  //console.log(response.data.access_token)
   let access_token = response.data.access_token;
   retrieveCountry(access_token);
 })
@@ -29,12 +34,13 @@ axios(config)
   console.log(error);
 });
 
-
+//retrieve country's COVID information
 function retrieveCountry(token){
     
   var data1 = qs.stringify({
  
   });
+  //
   var config = {
       method: 'get',
       url: 'https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=FR',
@@ -50,11 +56,11 @@ function retrieveCountry(token){
       let apiData = response.data;
       // console.log(JSON.stringify(response.data));
       // console.log(apiData);
-      console.log(apiData.data.area.name);
-      console.log(apiData.data.diseaseRiskLevel);
-      console.log(apiData.data.areaAccessRestriction.declarationDocuments);
-      console.log(apiData.data.areaAccessRestriction.entry.text);
-      console.log(apiData.data.areaAccessRestriction.mask);
+      //console.log(apiData.data.area.name);
+      //console.log(apiData.data.diseaseRiskLevel);
+      //console.log(apiData.data.areaAccessRestriction.declarationDocuments);
+      //console.log(apiData.data.areaAccessRestriction.entry.text);
+      //console.log(apiData.data.areaAccessRestriction.mask);
       setDashboard(apiData);
   })
   .catch(function (error) {
@@ -71,6 +77,7 @@ const docEl = document.querySelector('');
 const maskEl = document.querySelector('');
 const riskEl = document.querySelector('');
 
+// set data to elements to show in dashboard-handlebars
 function setDashboard(covidData){
     let countryName = covidData.data.area.name;
     let entryData = covidData.data.areaAccessRestriction.entry;
