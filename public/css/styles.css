@@ -3,3 +3,25 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.nav-style {
+    color: black;
+    text-decoration: none;
+    text-decoration: hov;
+}
+
+/* mouse over link */
+.nav-style:hover {
+color: rgb(223, 186, 108);
+text-decoration: underline;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(211, 175, 98);;
+}
+
+a:hover {
+    color: rgb(223, 186, 108);
+    text-decoration: underline;
+    }
