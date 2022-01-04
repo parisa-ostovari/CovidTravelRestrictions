@@ -1,27 +1,27 @@
-body{
-    background-image: url('https://media.istockphoto.com/photos/close-up-of-footprints-in-the-sand-at-sunset-picture-id544095860?b=1&k=20&m=544095860&s=170667a&w=0&h=tIErPWh1TUkENf7zTMw9cF34sf3VXIdiuCrZNR5feSA=');
-    background-repeat: no-repeat;
-    background-size: cover;
+.custom-navbar {
+    padding: 30px;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeA36npgHK-kTEoOZ7TqWM6qbsxYl3L2tdIszOfMoqPGhcRSJtBTR5tj_tLmU3V5OBEw&usqp=CAU);
+    background-color: rgb(255, 234, 189);
 }
 
 .nav-style {
     color: black;
     text-decoration: none;
-    text-decoration: hov;
 }
 
 /* mouse over link */
 .nav-style:hover {
-color: rgb(223, 186, 108);
-text-decoration: underline;
+    color: rgb(223, 186, 108);
+    text-decoration: underline;
 }
 
 a{
     text-decoration: none;
-    color: rgb(211, 175, 98);;
+    color: rgb(211, 175, 98);
+
 }
 
 a:hover {
     color: rgb(223, 186, 108);
     text-decoration: underline;
-    }
+ }

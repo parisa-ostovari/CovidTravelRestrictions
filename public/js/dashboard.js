@@ -117,4 +117,10 @@ function setDashboard(covidData){
     docRequirement.append(docText);
     docEl.append(docRequirement);
 }
+
+document
+  .querySelector('#search-form')
+  .addEventListener('submit', searchForm);
+// Need to create a const for searchForm to call the event listener 
+  
 module.exports = router;
