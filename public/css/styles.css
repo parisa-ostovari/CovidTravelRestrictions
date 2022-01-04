@@ -3,14 +3,6 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
-<<<<<<< HEAD
-.card {
-    position: left;
-    margin: 0 auto; /* Added */
-    float: none; /* Added */
-    margin-bottom: 10px; /* Added */
-}
-=======
 
 .nav-style {
     color: black;
@@ -33,4 +25,3 @@ a:hover {
     color: rgb(223, 186, 108);
     text-decoration: underline;
     }
->>>>>>> 6a3d0bd7d0585672c997b3529ab13028161aceaf
