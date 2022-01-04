@@ -13,49 +13,48 @@
 
 <body>
 
-  {{!-- <div class="flex-column justify-space-around"> --}}
-    <nav class="navbar navbar-light bg-light">
-      <div class="container-fluid">
-        <h2>
-          <i class="icon-plane"></i>
-          <a href="/" class="nav-style">Covid Travel Guide</a>
-        </h2>
+  <nav class="navbar navbar-light">
+    <div class="container-fluid custom-navbar">
+      <h2>
+        <i class="icon-plane"></i>
+        <a href="/" class="nav-style">Covid Travel Guide</a>
+      </h2>
 
-        <ul class="nav justify-content-end">
+      <ul class="nav justify-content-end">
 
-          {{#if loggedIn}}
-          <li class="nav-item">
-            <a class="nav-link nav-style" aria-current="page" href="/dashboard">Search Results</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-style" id="logout">Logout</a>
-          </li>
-          {{else}}
-          <li class="nav-item nav-style">
-            <a class="nav-link nav-style" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-style" href="/signup">Signup</a>
-          </li>
-          {{/if}}
+        {{#if loggedIn}}
+        <li class="nav-item">
+          <a class="nav-link nav-style" aria-current="page" href="/dashboard">Search Results</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-style" id="logout">Logout</a>
+        </li>
+        {{else}}
+        <li class="nav-item nav-style">
+          <a class="nav-link nav-style" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-style" href="/signup">Signup</a>
+        </li>
+        {{/if}}
 
 
-        </ul>
+      </ul>
 
-      </div>
-    </nav>
+    </div>
+  </nav>
 
-    <main class="container container-fluid mt-5">
-      <div class="card">
-        {{{body}}}
-      </div>
-    </main>
+  <main class="container container-fluid mt-5">
+    <div class="card p-3">
+      {{{body}}}
+    </div>
+  </main>
 
-    {{!--
-  </div> --}}
-  <footer>
-    <p>add footer here</p>
-  </footer>
+ <footer class="fixed-bottom footer mt-auto p-1 bg-light">
+   <div class="container">
+     <p class="text-muted text-center">Footer Content Here</p>
+   </div>
+ </footer>
 
   {{#if loggedIn}}
   <script src="./js/logout.js"></script>
