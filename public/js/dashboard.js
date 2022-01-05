@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 const CLIENT_ID = `${environment.theClientID}`;
 const CLIENT_SECRET = `${environment.theClientSecret}`;
 
@@ -115,11 +113,9 @@ function checkIfValid(value){
 function getToken(apiCountry){
   console.log(`starting api call to get token`);
   //api body parameters
-  var data = JSON.stringify({
-    'grant_type': 'client_credentials',
-    'client_id': CLIENT_ID,
-    'client_secret': CLIENT_SECRET 
-  });
+  var data = 
+    `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
+  ;
 
   //Setting up method, url, headers for api Oauth2.0 request
   var config = {
@@ -147,13 +143,14 @@ function getToken(apiCountry){
 //retrieve country's COVID information
 function retrieveCountry(token, searchCountry) {
   console.log(`token has been aquired, fetching COVID data`);
-  var data1 = qs.stringify({
-  });
+  console.log(token);
+  var data1 = ``;
   
   var config = {
       method: 'get',
       url: `https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${searchCountry}`,
       headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization-Bearer': 'G59rXFmdGmc8q0AF2FyN3j85kKVq', 
           'Authorization': 'Bearer '+ token
       },
@@ -164,7 +161,7 @@ function retrieveCountry(token, searchCountry) {
   .then(function (response) {
       let apiData = response.data;
       // console.log(JSON.stringify(response.data));
-      // console.log(apiData);
+      console.log(apiData);
       //console.log(apiData.data.area.name);
       //console.log(apiData.data.diseaseRiskLevel);
       //console.log(apiData.data.areaAccessRestriction.declarationDocuments);

@@ -5,6 +5,7 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const axios = require('axios');
+const cors = require('cors');
 
 
 // Initializes Sequelize with session store
@@ -37,6 +38,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// app.use(
+//   cors({
+//     origin: '*',
+//     methods: ['GET','POST'],
+//     allowedHeaders: ['Content-Type', 'Authorization-Bearer'],
+//     optionsSuccessfulStatue: 204
+// }));
 app.use(routes);
 
 // runs sequelize and checks if there is a database , if not, then it will run the schema and creates
@@ -47,3 +56,6 @@ sequelize.sync({ force: false }).then(() => {
       `\nServer running on port ${PORT}. Visit http://localhost:${PORT}`
     ));
 });
+
+
+
