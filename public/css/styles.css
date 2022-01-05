@@ -1,5 +1,52 @@
-body{
-    background-image: url('https://media.istockphoto.com/photos/close-up-of-footprints-in-the-sand-at-sunset-picture-id544095860?b=1&k=20&m=544095860&s=170667a&w=0&h=tIErPWh1TUkENf7zTMw9cF34sf3VXIdiuCrZNR5feSA=');
-    background-repeat: no-repeat;
-    background-size: cover;
+.custom-navbar {
+    padding: 30px;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeA36npgHK-kTEoOZ7TqWM6qbsxYl3L2tdIszOfMoqPGhcRSJtBTR5tj_tLmU3V5OBEw&usqp=CAU);
+    background-color: rgb(255, 234, 189); 
+}
+
+.nav-style {
+    color: black;
+    text-decoration: none;
+    background-color: rgb(174, 213, 250);
+    border-radius: 6px;
+    border: 2px solid rgb(240, 229, 206);
+    opacity: 85%;
+    padding: 5px 10px;
+    font-weight: 635;
+}
+
+.nav-style:hover {
+    color: rgb(194, 160, 86);
+    text-decoration: underline;
+}
+
+.container {
+    background-color: rgb(247, 247, 247);
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid rgb(255, 249, 237);
+}
+
+a {
+    text-decoration: none;
+    color: rgb(47, 117, 187);
+}
+
+a:hover {
+    color: rgb(231, 180, 68);
+    text-decoration: underline;
+}
+
+.btn-custom {
+    background-color: rgb(250, 238, 214);
+    border: 2px solid rgb(241, 228, 198);
+}
+
+#search-form {
+    margin: 20px 0px 10px 0;
+}
+
+.footer {
+    text-align: center;
+    color: rgb(223, 186, 108);
 }
