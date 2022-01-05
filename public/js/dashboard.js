@@ -1,49 +1,116 @@
-const router = require('express').Router();
-const path = require('path');
-const axios = require('axios');
-var qs = require('qs');
+// const axios = require('axios');
+// var qs = require('qs');
 
-//change id and key to CLIENT_ID & CLIENT_SECRET from .env folder
-//api body parameters
-var data = qs.stringify({
-  'grant_type': 'client_credentials',
-  'client_id': 'D98xiSbhvHJl5oqdS0MKHsVB5GFmKCHJ',
-  'client_secret': 'GHpH5yEpRKqWuuoR' 
+//variables that will tie to handlebar sections
+//const titleEl = document.querySelector('');
+const entryEl = document.querySelector('.entryContainer');
+const docEl = document.querySelector('.docContainer');
+const maskEl = document.querySelector('.maskContainer');
+const riskEl = document.querySelector('.riskContainer');
+//const buttonEl = document.querySelector('.');
+var previousCountries = [];
+
+const formEl = document.querySelector('input[name="search"]');
+const formValue = document.querySelector('form');
+
+
+checkForHistory();
+
+//event listener for submit button on searchbar
+formEl.addEventListener("submit", function(clicked){
+  clicked.preventDefault();
+  let val = formValue.value.trim();
+  if (!val){
+    return;
+  }
+  checkIfValid(val);
+  previousCountries.push(val);
+  localStorage.setItem("searched Countries", JSON.stringify(previousCountries));
+
 });
 
-//Setting up method, url, headers for api Oauth2.0 request
-var config = {
-  method: 'post',
-  url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
-  headers: { 
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  data : data
-};
+
+// function to check localstorage for any previous searches 
+function checkForHistory() {
+  let pastHistory = localStorage.getItem("countryCodes");
+    
+  if(pastHistory) { 
+      let pastCountries = JSON.parse(pastHistory); 
+      showHistory(pastCountries); 
+  } 
+}
+
+// function to loop through local storage container
+function showHistory(history) {
+  for (let i = 0; i <history.length; i++){
+    let countries = history[i];
+    createButton(countries);
+  }
+}
+
+// function to create a button for every country code pulled from local storage
+function createButton(countryCodes) {
+  let newButton = document.createElement("button");
+  newButton.className = "btn-info";
+  newButton.textContent = countryCodes;
+  //buttonEl.appendChild(newButton);
+
+  newButton.addEventListener("click", function (){
+    localStorage.setItem("countryCodes", JSON.stringify(previousCountries));
+    //function call
+    document.getElementById("tempHidden").classList.remove("visually-hidden");
+  });
+}
+
+function checkIfValid(value){
+  if(value.length != 2){
+    // put warning here that the country code must be two letters long
+    return;
+  }
+}
 
 
 //calling API to recieve access token from Amadeus
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-  //console.log(response.data.access_token)
-  let access_token = response.data.access_token;
-  retrieveCountry(access_token);
-})
-.catch(function (error) {
-  console.log(error);
-});
+function getToken(){
+  //api body parameters
+  var data = qs.stringify({
+    'grant_type': 'client_credentials',
+    'client_id': CLIENT_ID,
+    'client_secret': CLIENT_SECRET 
+  });
+
+  //Setting up method, url, headers for api Oauth2.0 request
+  var config = {
+    method: 'post',
+    url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
+    headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data : data
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      //console.log(response.data.access_token)
+      let access_token = response.data.access_token;
+      retrieveCountry(access_token);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+}
 
 //retrieve country's COVID information
-function retrieveCountry(token){
+function retrieveCountry(token) {
     
   var data1 = qs.stringify({
- 
   });
-  //
+  
   var config = {
       method: 'get',
-      url: 'https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=FR',
+      url: `https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${country}`,
       headers: { 
           'Authorization-Bearer': 'G59rXFmdGmc8q0AF2FyN3j85kKVq', 
           'Authorization': 'Bearer '+ token
@@ -68,26 +135,17 @@ function retrieveCountry(token){
   });
 }
 
-
-
-//variables that will tie to handlebar sections
-const titleEl = document.querySelector('');
-const entryEl = document.querySelector('');
-const docEl = document.querySelector('');
-const maskEl = document.querySelector('');
-const riskEl = document.querySelector('');
-
 // set data to elements to show in dashboard-handlebars
-function setDashboard(covidData){
+function setDashboard(covidData) {
     let countryName = covidData.data.area.name;
     let entryData = covidData.data.areaAccessRestriction.entry;
     let docData = covidData.data.areaAccessRestriction.declarationDocuments;
     let maskData = covidData.data.areaAccessRestriction.mask;
     let diseaseRisk = covidData.data.diseaseRiskLevel;
 
-    let title = document.createElement('h1');
-    title.textContent = countryName;
-    titleEl.append(title);
+    // let title = document.createElement('h1');
+    // title.textContent = countryName;
+    // titleEl.append(title);
 
     let riskLvl = document.createElement('h3');
     riskLvl.textContent = "Disease Risk Level"
@@ -118,9 +176,9 @@ function setDashboard(covidData){
     docEl.append(docRequirement);
 }
 
-document
-  .querySelector('#search-form')
-  .addEventListener('submit', searchForm);
+
+// document
+//   .querySelector('#search-form')
+//   .addEventListener('submit', searchForm);
 // Need to create a const for searchForm to call the event listener 
-  
-module.exports = router;
+
