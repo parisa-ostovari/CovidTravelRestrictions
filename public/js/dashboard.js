@@ -11,7 +11,7 @@ const riskEl = document.querySelector('.riskContainer');
 var previousCountries = [];
 
 const formEl = document.querySelector('input[name="search"]');
-const formValue = document.querySelector('button');
+const formValue = document.querySelector('#buttonSearch');
 
 const codeArray = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT",
 "BO","BQ","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CD","CK","CR","CI","HR",
