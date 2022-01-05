@@ -12,25 +12,6 @@ const riskEl = document.querySelector('.riskContainer');
 const formInput = document.querySelector('input[name="search-form"]');
 
 
-//api body parameters
-var data = qs.stringify({
-  'grant_type': 'client_credentials',
-  'client_id': CLIENT_ID,
-  'client_secret': CLIENT_SECRET 
-});
-
-//Setting up method, url, headers for api Oauth2.0 request
-var config = {
-  method: 'post',
-  url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
-  headers: { 
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  data : data
-};
-
-
-
 // function to check localstorage for any previous searches 
 function checkForHistory() {
   let pastHistory = localStorage.getItem("countryCodes");
@@ -66,17 +47,36 @@ function createButton(countryCodes) {
 
 
 //calling API to recieve access token from Amadeus
-function getToken
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
+function getToken(){
+  //api body parameters
+  var data = qs.stringify({
+  'grant_type': 'client_credentials',
+  'client_id': CLIENT_ID,
+  'client_secret': CLIENT_SECRET 
+  });
+
+  //Setting up method, url, headers for api Oauth2.0 request
+  var config = {
+    method: 'post',
+    url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
+    headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data : data
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
   //console.log(response.data.access_token)
   let access_token = response.data.access_token;
   retrieveCountry(access_token);
-})
-.catch(function (error) {
-  console.log(error);
-});
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+}
 
 
 //retrieve country's COVID information
