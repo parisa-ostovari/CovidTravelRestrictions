@@ -1,5 +1,5 @@
-const axios = require('axios');
-var qs = require('qs');
+// const axios = require('axios');
+// var qs = require('qs');
 
 //variables that will tie to handlebar sections
 //const titleEl = document.querySelector('');
@@ -8,8 +8,26 @@ const docEl = document.querySelector('.docContainer');
 const maskEl = document.querySelector('.maskContainer');
 const riskEl = document.querySelector('.riskContainer');
 //const buttonEl = document.querySelector('.');
+var previousCountries = [];
 
-const formInput = document.querySelector('input[name="search-form"]');
+const formEl = document.querySelector('input[name="search"]');
+const formValue = document.querySelector('form');
+
+
+checkForHistory();
+
+//event listener for submit button on searchbar
+formEl.addEventListener("submit", function(clicked){
+  clicked.preventDefault();
+  let val = formValue.value.trim();
+  if (!val){
+    return;
+  }
+  checkIfValid(val);
+  previousCountries.push(val);
+  localStorage.setItem("searched Countries", JSON.stringify(previousCountries));
+
+});
 
 
 // function to check localstorage for any previous searches 
@@ -20,7 +38,6 @@ function checkForHistory() {
       let pastCountries = JSON.parse(pastHistory); 
       showHistory(pastCountries); 
   } 
-  
 }
 
 // function to loop through local storage container
@@ -39,10 +56,17 @@ function createButton(countryCodes) {
   //buttonEl.appendChild(newButton);
 
   newButton.addEventListener("click", function (){
-    localStorage.setItem("", JSON.stringify());
+    localStorage.setItem("countryCodes", JSON.stringify(previousCountries));
     //function call
     document.getElementById("tempHidden").classList.remove("visually-hidden");
   });
+}
+
+function checkIfValid(value){
+  if(value.length != 2){
+    // put warning here that the country code must be two letters long
+    return;
+  }
 }
 
 
@@ -50,9 +74,9 @@ function createButton(countryCodes) {
 function getToken(){
   //api body parameters
   var data = qs.stringify({
-  'grant_type': 'client_credentials',
-  'client_id': CLIENT_ID,
-  'client_secret': CLIENT_SECRET 
+    'grant_type': 'client_credentials',
+    'client_id': CLIENT_ID,
+    'client_secret': CLIENT_SECRET 
   });
 
   //Setting up method, url, headers for api Oauth2.0 request
@@ -68,16 +92,15 @@ function getToken(){
   axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
-  //console.log(response.data.access_token)
-  let access_token = response.data.access_token;
-  retrieveCountry(access_token);
+      //console.log(response.data.access_token)
+      let access_token = response.data.access_token;
+      retrieveCountry(access_token);
   })
   .catch(function (error) {
     console.log(error);
   });
 
 }
-
 
 //retrieve country's COVID information
 function retrieveCountry(token) {
@@ -154,9 +177,8 @@ function setDashboard(covidData) {
 }
 
 
-
-
-document
-  .querySelector('#search-form')
-  .addEventListener('submit', searchForm);
+// document
+//   .querySelector('#search-form')
+//   .addEventListener('submit', searchForm);
 // Need to create a const for searchForm to call the event listener 
+

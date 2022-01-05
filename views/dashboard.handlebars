@@ -1,16 +1,18 @@
 {{!-- body where all the different items we are calling from the api --}}
 
-<body>
+<div>
     <h3>Which Country Do I Want To Travel To...?</h3>
 
     <form id="search-form" class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search for a country by using the Country Code. (ie. CA for Canada)" aria-label="Search">
+        <input class="form-control mr-sm-2" name="search"type="search" placeholder="Search for a country by using the Country Code. (ie. CA for Canada)" aria-label="Search">
         <button class="btn btn-outline-success my-sm-0" type="submit">Search</button>
     </form>
 
     <hr>
+{{!--div container for buttons --}}
 
-    <div class="container-fluid mt-5">
+{{!-- div container for country title name spot? --}}
+    <div class="container-fluid mt-5 visually-hidden">
 
         <div class="card" style="width: 18rem;">
             <div class="card-body entryContainer">
@@ -43,5 +45,5 @@
                 <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
-    <script type="text/javascript" src="/public/js/dashboard.js"></script>
-</body>
+    
+</div>
