@@ -1,4 +1,4 @@
-const loginForm = async function(event) {
+const loginForm = async function (event) {
   event.preventDefault();
 
   // Obtaining values from the login form
@@ -14,14 +14,13 @@ const loginForm = async function(event) {
     headers: { 'Content-Type': 'application/json' },
   });
 
-    if (response.ok) {
-      // If successful, create a success alert OR redirect the browser to the saved destinations page OR 
-      document.location.replace('/dashboard');
-      alert('Log in Successful')
-    } else {
-      alert('Failed to log in');
-    }
-  };
+  if (response.ok) {
+    document.location.replace('/dashboard');
+    alert('Log in Successful')
+  } else {
+    alert('Failed to log in');
+  }
+};
 
 document
   .querySelector('#login-form')

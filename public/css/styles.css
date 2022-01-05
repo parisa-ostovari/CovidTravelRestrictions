@@ -1,27 +1,52 @@
 .custom-navbar {
     padding: 30px;
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeA36npgHK-kTEoOZ7TqWM6qbsxYl3L2tdIszOfMoqPGhcRSJtBTR5tj_tLmU3V5OBEw&usqp=CAU);
-    background-color: rgb(255, 234, 189);
+    background-color: rgb(255, 234, 189); 
 }
 
 .nav-style {
     color: black;
     text-decoration: none;
+    background-color: rgb(174, 213, 250);
+    border-radius: 6px;
+    border: 2px solid rgb(240, 229, 206);
+    opacity: 85%;
+    padding: 5px 10px;
+    font-weight: 635;
 }
 
-/* mouse over link */
 .nav-style:hover {
-    color: rgb(223, 186, 108);
+    color: rgb(194, 160, 86);
     text-decoration: underline;
 }
 
-a{
-    text-decoration: none;
-    color: rgb(211, 175, 98);
+.container {
+    background-color: rgb(247, 247, 247);
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid rgb(255, 249, 237);
+}
 
+a {
+    text-decoration: none;
+    color: rgb(47, 117, 187);
 }
 
 a:hover {
-    color: rgb(223, 186, 108);
+    color: rgb(231, 180, 68);
     text-decoration: underline;
+}
+
+.btn-custom {
+    background-color: rgb(250, 238, 214);
+    border: 2px solid rgb(241, 228, 198);
+}
+
+#search-form {
+    margin: 20px 0px 10px 0;
+}
+
+.footer {
+    text-align: center;
+    color: rgb(223, 186, 108);
 }

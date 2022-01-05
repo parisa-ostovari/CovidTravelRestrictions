@@ -2,22 +2,17 @@ const router = require('express').Router();
 const { User } = require('../models/');
 const withAuth = require('../utils/auth')
 
-// Home page route
+// Homepage route
 router.get('/', (req, res) => {
 
-  res.render('homepage', {loggedIn: req.session.loggedIn});
+  res.render('homepage', { loggedIn: req.session.loggedIn });
 });
 
 
 // Saved-destination route
-router.get('/dashboard',  withAuth, async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    // const dbUserData = await User.findAll()
-    // console.log(dbUserData)
-    // const userData = dbUserData.map((user) => {
-    //   return user.get({ plain: true })
-    // })
-    res.render('dashboard', { loggedIn: req.session.loggedIn,  })
+    res.render('dashboard', { loggedIn: req.session.loggedIn, })
   }
   catch (err) {
     res.status(500).json(err)
@@ -83,7 +78,6 @@ router.get('/get', async (req, res) => {
   }
 })
 
-// -- Code from 94 to 113 is correct -- //
 // Login route
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {

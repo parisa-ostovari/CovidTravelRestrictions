@@ -21,7 +21,6 @@
       </h2>
 
       <ul class="nav justify-content-end">
-
         {{#if loggedIn}}
         <li class="nav-item">
           <a class="nav-link nav-style" aria-current="page" href="/dashboard">Search Results</a>
@@ -30,17 +29,14 @@
           <a class="nav-link nav-style" id="logout">Logout</a>
         </li>
         {{else}}
-        <li class="nav-item nav-style">
+        <li class="nav-item">
           <a class="nav-link nav-style" href="/login">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link nav-style" href="/signup">Signup</a>
         </li>
         {{/if}}
-
-
       </ul>
-
     </div>
   </nav>
 
@@ -50,17 +46,17 @@
     </div>
   </main>
 
- <footer class="fixed-bottom footer mt-auto p-1 bg-light">
-   <div class="container">
-     <p class="text-muted text-center">Footer Content Here</p>
-   </div>
- </footer>
+  <footer class="fixed-bottom footer mt-auto p-1 bg-light">
+    <div class="container">
+      <a href="https://github.com/Juwonoh41/Covid-travel-search">Link to our Github page</a>
+    </div>
+  </footer>
 
   {{#if loggedIn}}
   <script src="./js/logout.js"></script>
-  
   {{/if}}
-<script src="./js/dashboard.js"></script>
+  <script src="./js/dashboard.js"></script>
+  
 </body>
 
 </html>
