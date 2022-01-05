@@ -6,8 +6,8 @@
 - [License](#license)
 - [Contributors](#contributors)
 - [Websites](#websites)
-- [Built With](#built)
-- [Questions/Errors](#questions)
+- [Programs](#programs)
+- [Contact](#contact)
 
 ### Description
 This is a program that will allow an individual who wishes to go to another country to easily obtain information on that country's current COVID restrictions.                

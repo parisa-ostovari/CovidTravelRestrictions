@@ -3,6 +3,8 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
+const axios = require('axios');
+const querystring = require('qs');
 
 // Initializes Sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);

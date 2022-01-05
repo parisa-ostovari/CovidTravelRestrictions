@@ -1,5 +1,5 @@
 // const axios = require('axios');
-// var qs = require('qs');
+// const qs = require('qs');
 
 //variables that will tie to handlebar sections
 //const titleEl = document.querySelector('');
@@ -11,30 +11,47 @@ const riskEl = document.querySelector('.riskContainer');
 var previousCountries = [];
 
 const formEl = document.querySelector('input[name="search"]');
-const formValue = document.querySelector('form');
+const formValue = document.querySelector('button');
 
+const codeArray = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT",
+"BO","BQ","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CD","CK","CR","CI","HR",
+"CU","CW","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","FK","FO","FJ","FI","FR","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL",
+"GD","GP","GU","GT","GG","GN","GW","GY","HT","HM","VA","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","JM","JP","JE","JO","KZ","KE","KI",
+"KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC",
+"MN","ME","MS","MA","MZ","MM","NA","NR","NP","NL","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PS","PA","PG","PY","PE","PH","PN","PL",
+"PT","PR","QA","RE","RO","RU","RW","BL","SH","KN","LC","MF","PM","VC","WS","SM","ST","SA","SN","RS","SC","SL","SG","SX","SK","SI","SB","SO","ZA","GS",
+"SS","ES","LK","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TL","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM",
+"UY","UZ","VU","VE","VN","VG","VI","WF","EH","YE","ZM","ZW"];
 
 checkForHistory();
 
 //event listener for submit button on searchbar
-formEl.addEventListener("submit", function(clicked){
+formValue.addEventListener("click", function(clicked) {
   clicked.preventDefault();
-  let val = formValue.value.trim();
-  if (!val){
-    return;
+  console.log(`button clicked`);
+  let val = formEl.value.trim();
+  console.log(val);
+  val = val.toUpperCase();
+  console.log(val);
+  let isValidCode = checkIfValid(val);
+  console.log(isValidCode);
+  if (isValidCode){
+    console.log(`code is valid, in if statement`)
+    previousCountries.push(val);
+    localStorage.setItem("searched Countries", JSON.stringify(previousCountries));  
+    // call function to start the API call
+    getToken(val);
   }
-  checkIfValid(val);
-  previousCountries.push(val);
-  localStorage.setItem("searched Countries", JSON.stringify(previousCountries));
-
 });
 
 
 // function to check localstorage for any previous searches 
 function checkForHistory() {
+  console.log(`Checking for past searches`);
   let pastHistory = localStorage.getItem("countryCodes");
     
   if(pastHistory) { 
+    console.log(`Past searches were found`);
       let pastCountries = JSON.parse(pastHistory); 
       showHistory(pastCountries); 
   } 
@@ -42,6 +59,7 @@ function checkForHistory() {
 
 // function to loop through local storage container
 function showHistory(history) {
+  console.log(`Showing history of past searches`);
   for (let i = 0; i <history.length; i++){
     let countries = history[i];
     createButton(countries);
@@ -50,30 +68,51 @@ function showHistory(history) {
 
 // function to create a button for every country code pulled from local storage
 function createButton(countryCodes) {
+  console.log(`creating buttons for past searches`);
   let newButton = document.createElement("button");
   newButton.className = "btn-info";
   newButton.textContent = countryCodes;
   //buttonEl.appendChild(newButton);
 
   newButton.addEventListener("click", function (){
+    console.log(`adding the event listeners to the buttons from localStorage`);
     localStorage.setItem("countryCodes", JSON.stringify(previousCountries));
     //function call
+
     document.getElementById("tempHidden").classList.remove("visually-hidden");
   });
 }
 
 function checkIfValid(value){
+  console.log(`Checking if input is valid`);
+  if (!value){
+    console.log(`input is null`);
+    return false;
+  };
+
   if(value.length != 2){
     // put warning here that the country code must be two letters long
-    return;
-  }
+    console.log(`Country code is not 2 characters long`);
+    return false;
+  };
+
+  for (let i = 0; i < codeArray.length ; i++){
+    if (value = codeArray[i]){
+      console.log(`Country code matches`);
+      return true;
+    } else {
+      console.log(`Country code did not match array`);
+      return false;
+    }
+  };
 }
 
 
 //calling API to recieve access token from Amadeus
-function getToken(){
+function getToken(apiCountry){
+  console.log(`starting api call to get token`);
   //api body parameters
-  var data = qs.stringify({
+  var data = querystring.stringify({
     'grant_type': 'client_credentials',
     'client_id': CLIENT_ID,
     'client_secret': CLIENT_SECRET 
@@ -91,26 +130,26 @@ function getToken(){
 
   axios(config)
     .then(function (response) {
+      console.log(`----____--_-__-----___--`);
       console.log(JSON.stringify(response.data));
       //console.log(response.data.access_token)
       let access_token = response.data.access_token;
-      retrieveCountry(access_token);
+      retrieveCountry(access_token, apiCountry);
   })
   .catch(function (error) {
     console.log(error);
   });
-
 }
 
 //retrieve country's COVID information
-function retrieveCountry(token) {
-    
+function retrieveCountry(token, searchCountry) {
+  console.log(`token has been aquired, fetching COVID data`);
   var data1 = qs.stringify({
   });
   
   var config = {
       method: 'get',
-      url: `https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${country}`,
+      url: `https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${searchCountry}`,
       headers: { 
           'Authorization-Bearer': 'G59rXFmdGmc8q0AF2FyN3j85kKVq', 
           'Authorization': 'Bearer '+ token
@@ -137,6 +176,7 @@ function retrieveCountry(token) {
 
 // set data to elements to show in dashboard-handlebars
 function setDashboard(covidData) {
+  console.log(`Filling in the Dashboard data`);
     let countryName = covidData.data.area.name;
     let entryData = covidData.data.areaAccessRestriction.entry;
     let docData = covidData.data.areaAccessRestriction.declarationDocuments;
