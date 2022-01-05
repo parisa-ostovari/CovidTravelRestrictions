@@ -1,5 +1,7 @@
-// const axios = require('axios');
-// const qs = require('qs');
+const axios = require('axios');
+
+const CLIENT_ID = `${environment.theClientID}`;
+const CLIENT_SECRET = `${environment.theClientSecret}`;
 
 //variables that will tie to handlebar sections
 //const titleEl = document.querySelector('');
@@ -13,6 +15,7 @@ var previousCountries = [];
 const formEl = document.querySelector('input[name="search"]');
 const formValue = document.querySelector('#buttonSearch');
 
+// this array will be used to check if the country code that the user puts in currently exists
 const codeArray = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT",
 "BO","BQ","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CD","CK","CR","CI","HR",
 "CU","CW","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","FK","FO","FJ","FI","FR","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL",
@@ -112,7 +115,7 @@ function checkIfValid(value){
 function getToken(apiCountry){
   console.log(`starting api call to get token`);
   //api body parameters
-  var data = querystring.stringify({
+  var data = JSON.stringify({
     'grant_type': 'client_credentials',
     'client_id': CLIENT_ID,
     'client_secret': CLIENT_SECRET 
