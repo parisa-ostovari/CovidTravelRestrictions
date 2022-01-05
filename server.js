@@ -9,7 +9,7 @@ const querystring = require('qs');
 // Initializes Sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
-const hbs =  exphbs.create({});
+const hbs = exphbs.create({});
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -26,11 +26,8 @@ const sess = {
 };
 
 app.use(session(sess));
-// Adding app.engine to use handlebars..might have to switch to doing it this way but other way works for now.
-// app.engine('handlebars', hbs.engine);
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

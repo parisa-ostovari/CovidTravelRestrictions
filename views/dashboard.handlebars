@@ -1,17 +1,25 @@
-{{!-- body where all the different items we are calling from the api --}}
+{{!-- Search Page --}}
 
 <div>
-    <h3>Which Country Do I Want To Travel To...?</h3>
-
-    <form id="search-form" class="form-inline">
-        <input class="form-control mr-sm-2" name="search"type="search" placeholder="Search for a country by using the Country Code. (ie. CA for Canada)" aria-label="Search">
-        <button class="btn btn-outline-success my-sm-0" type="submit">Search</button>
+    <h3 class="text-center">Which country would you like to travel to?</h3>
+    
+    <form id="search-form" class="input-group">
+        <input class="form-control" name="search" type="search"
+            placeholder="Search by using a two-digit Country Code. (i.e. CA for Canada)" aria-label="Search">
+        <button class="btn btn-custom" type="submit">Search</button>
     </form>
+    
+    {{!-- use this if we can't get the list of country codes --}}
+    <div class="form-text ms-1">To look up your desired country code, you can use this <a href="https://laendercode.net/en/">website.</a></div>
 
+    {{!--div container for buttons --}}
+    <div id="prior-searches" class="list-group"></div>
     <hr>
-{{!--div container for buttons --}}
 
-{{!-- div container for country title name spot? --}}
+
+
+
+    {{!-- div container for country title name spot? --}}
     <div class="container-fluid mt-5 visually-hidden">
 
         <div class="card" style="width: 18rem;">
@@ -45,5 +53,5 @@
                 <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
-    
-</div>
+
+    </div>
