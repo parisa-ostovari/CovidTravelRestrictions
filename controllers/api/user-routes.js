@@ -4,12 +4,12 @@ const { User } = require('../../models');
 // Create new user
 router.post('/', async (req, res) => {
   try {
-    
+
     const newUserData = await User.create({
       email: req.body.email,
       password: req.body.password,
     });
-console.log(newUserData)
+    console.log(newUserData)
     req.session.save(() => {
       req.session.userId = newUserData.id;
       req.session.email = newUserData.email;
@@ -22,7 +22,7 @@ console.log(newUserData)
   }
 });
 
-//login routes
+// Login route
 router.post('/login', async (req, res) => {
   // searching db for user with the inputted email
   try {
@@ -50,12 +50,12 @@ router.post('/login', async (req, res) => {
       res.status(200).json({ dbUserData, message: 'You are now logged in.' });
     });
   } catch (err) {
-    res.status(400).json({ message: 'No account found.'});
+    res.status(400).json({ message: 'No account found.' });
   }
 });
 
 
-// Logout
+// Logout route
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {

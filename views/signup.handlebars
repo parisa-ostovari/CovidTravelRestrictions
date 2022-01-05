@@ -1,41 +1,26 @@
+{{!-- Signup Page --}}
+
 <div class="card">
   <div class="card-header">
     <h2>Sign up for a new account</h2>
   </div>
-{{!-- 
-  <form id="signup-form" class="card-body">
-
-    <div>
-      <label for="email-input-signup">Email</label>
-      <input type="text" id="email-input-signup" />
-    </div>
-
-    <div>
-      <label for="password-input-signup">Password</label>
-      <input type="password" id="password-input-signup" />
-    </div>
-
-    <button type="submit" id="signup-btn" class="btn" >Submit</button>
-    <a href="/login">Login if you already have an account.</a>
-  </form> --}}
 
   <form id="signup-form" class="card-body">
 
-  <div class="mb-3">
-    <label for="email-input-signup"class="form-label">Email address</label>
-    <input type="email" class="form-control" id="email-input-signup" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
+    <div class="mb-3">
+      <label for="email-input-signup" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email-input-signup" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="password-input-signup" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password-input-signup">
+      <div id="passwordHelp" class="form-text">Password must be more than 8 characters</div>
+    </div>
+    <button type="submit" class="btn btn-custom">Submit</button>
 
-  <div class="mb-3">
-    <label for="password-input-signup" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password-input-signup">
-    <div id="emailHelp" class="form-text">Password must be more than 8 characters</div>
-  </div>
+  </form>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-  
 </div>
 
 <script src="/js/signup.js"></script>
