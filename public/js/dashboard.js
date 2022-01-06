@@ -1,5 +1,10 @@
-const CLIENT_ID = `${environment.theClientID}`;
-const CLIENT_SECRET = `${environment.theClientSecret}`;
+// const CLIENT_ID = `${environment.theClientID}`;
+// const CLIENT_SECRET = `${environment.theClientSecret}`;
+// const country = require('./seeds')
+
+
+
+
 
 //variables that will tie to handlebar sections
 //const titleEl = document.querySelector('');
@@ -208,6 +213,11 @@ function setDashboard(covidData) {
     docRequirement.append(docText);
     docEl.append(docRequirement);
 }
+
+
+
+
+
 
 
 // document

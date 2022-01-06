@@ -1,11 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
-
 const sequelize = require('../config/connection');
 
 
-class Country extends Model{
-
-}
+class Country extends Model {}
 
 Country.init(
     {
@@ -62,14 +59,13 @@ Country.init(
         },
     },
     {
-        hooks: { 
-            
-
-    },
-    sequelize,
-    timestamps:false,
-    freezeTableName: true,
-    underscored: true,
-    });
+        sequelize,
+        timestamps:false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'country' 
+    }
+   
+    );
 
 module.exports = Country;
