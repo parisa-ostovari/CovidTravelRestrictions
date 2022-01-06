@@ -2,12 +2,13 @@ const router = require('express').Router();
 const { User } = require('../models/');
 const withAuth = require('../utils/auth')
 
+
+
 // Homepage route
 router.get('/', (req, res) => {
 
   res.render('homepage', { loggedIn: req.session.loggedIn });
 });
-
 
 // Saved-destination route
 router.get('/dashboard', withAuth, async (req, res) => {
@@ -19,6 +20,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 })
 
+// 
 router.post('/create', async (req, res) => {
   try {
     const dbUser = await User.create({
@@ -32,6 +34,7 @@ router.post('/create', async (req, res) => {
   }
 })
 
+// 
 router.get('/get', async (req, res) => {
   try {
     const dbUserData = await User.findAll({
@@ -55,6 +58,7 @@ router.get('/get', async (req, res) => {
   }
 })
 
+// 
 router.get('/get', async (req, res) => {
   try {
     const db = mysql.createConnection(

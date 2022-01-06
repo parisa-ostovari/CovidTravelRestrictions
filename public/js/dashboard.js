@@ -1,5 +1,10 @@
-// const axios = require('axios');
-// const qs = require('qs');
+// const CLIENT_ID = `${environment.theClientID}`;
+// const CLIENT_SECRET = `${environment.theClientSecret}`;
+// const country = require('./seeds')
+
+
+
+
 
 //variables that will tie to handlebar sections
 //const titleEl = document.querySelector('');
@@ -13,15 +18,8 @@ var previousCountries = [];
 const formEl = document.querySelector('input[name="search"]');
 const formValue = document.querySelector('#buttonSearch');
 
-const codeArray = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT",
-"BO","BQ","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CD","CK","CR","CI","HR",
-"CU","CW","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","FK","FO","FJ","FI","FR","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL",
-"GD","GP","GU","GT","GG","GN","GW","GY","HT","HM","VA","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","JM","JP","JE","JO","KZ","KE","KI",
-"KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC",
-"MN","ME","MS","MA","MZ","MM","NA","NR","NP","NL","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PS","PA","PG","PY","PE","PH","PN","PL",
-"PT","PR","QA","RE","RO","RU","RW","BL","SH","KN","LC","MF","PM","VC","WS","SM","ST","SA","SN","RS","SC","SL","SG","SX","SK","SI","SB","SO","ZA","GS",
-"SS","ES","LK","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TL","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM",
-"UY","UZ","VU","VE","VN","VG","VI","WF","EH","YE","ZM","ZW"];
+// this array will be used to check if the country code that the user puts in currently exists
+const codeArray = ["US","CA","IT","EE","FR"];
 
 checkForHistory();
 
@@ -40,7 +38,8 @@ formValue.addEventListener("click", function(clicked) {
     previousCountries.push(val);
     localStorage.setItem("searched Countries", JSON.stringify(previousCountries));  
     // call function to start the API call
-    getToken(val);
+    // getToken(val);
+
   }
 });
 
@@ -107,72 +106,71 @@ function checkIfValid(value){
   };
 }
 
-
-//calling API to recieve access token from Amadeus
-function getToken(apiCountry){
-  console.log(`starting api call to get token`);
-  //api body parameters
-  var data = querystring.stringify({
-    'grant_type': 'client_credentials',
-    'client_id': CLIENT_ID,
-    'client_secret': CLIENT_SECRET 
-  });
-
-  //Setting up method, url, headers for api Oauth2.0 request
-  var config = {
-    method: 'post',
-    url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
-    headers: { 
-    'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data : data
-  };
-
-  axios(config)
-    .then(function (response) {
-      console.log(`----____--_-__-----___--`);
-      console.log(JSON.stringify(response.data));
-      //console.log(response.data.access_token)
-      let access_token = response.data.access_token;
-      retrieveCountry(access_token, apiCountry);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
-
-//retrieve country's COVID information
-function retrieveCountry(token, searchCountry) {
-  console.log(`token has been aquired, fetching COVID data`);
-  var data1 = qs.stringify({
-  });
+//   function getToken(apiCountry){
+//     console.log(`starting api call to get token`);
+//     //api body parameters
+//     var data = 
+//       `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
+//     ;
   
-  var config = {
-      method: 'get',
-      url: `https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${searchCountry}`,
-      headers: { 
-          'Authorization-Bearer': 'G59rXFmdGmc8q0AF2FyN3j85kKVq', 
-          'Authorization': 'Bearer '+ token
-      },
-      data : data1
-  };
+//     //Setting up method, url, headers for api Oauth2.0 request
+//     var config = {
+//       method: 'post',
+//       url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
+//       headers: { 
+//       'Content-Type': 'application/x-www-form-urlencoded'
+//       },
+//       data : data
+//     };
+  
+//     (config)
+//       .then(function (response) {
+//         console.log(`----____--_-__-----___--`);
+//         console.log(JSON.stringify(response.data));
+//         //console.log(response.data.access_token)
+//         let access_token = response.data.access_token;
+//         retrieveCountry(access_token, apiCountry);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     });
+//   }
 
-  axios(config)
-  .then(function (response) {
-      let apiData = response.data;
-      // console.log(JSON.stringify(response.data));
-      // console.log(apiData);
-      //console.log(apiData.data.area.name);
-      //console.log(apiData.data.diseaseRiskLevel);
-      //console.log(apiData.data.areaAccessRestriction.declarationDocuments);
-      //console.log(apiData.data.areaAccessRestriction.entry.text);
-      //console.log(apiData.data.areaAccessRestriction.mask);
-      setDashboard(apiData);
-  })
-  .catch(function (error) {
-      console.log(error);
-  });
-}
+
+
+// // retrieve country's COVID information
+// function retrieveCountry(token, searchCountry) {
+//   console.log(`token has been aquired, fetching COVID data`);
+//   console.log(token);
+//   var data1 = ``;
+  
+//   var config = {
+//       method: 'get',
+//       url: `https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${searchCountry}`,
+//       headers: { 
+//           'Content-Type': 'application/x-www-form-urlencoded',
+//           'Authorization-Bearer': 'G59rXFmdGmc8q0AF2FyN3j85kKVq', 
+//           'Authorization': 'Bearer '+ token
+//       },
+//       data : data1
+//   };
+
+//   axios(config)
+//   .then(function (response) {
+//       let apiData = response.data;
+//       // console.log(JSON.stringify(response.data));
+//       console.log(apiData);
+//       //console.log(apiData.data.area.name);
+//       //console.log(apiData.data.diseaseRiskLevel);
+//       //console.log(apiData.data.areaAccessRestriction.declarationDocuments);
+//       //console.log(apiData.data.areaAccessRestriction.entry.text);
+//       //console.log(apiData.data.areaAccessRestriction.mask);
+//       setDashboard(apiData);
+//   })
+//   .catch(function (error) {
+//       console.log(error);
+//   });
+// }
 
 // set data to elements to show in dashboard-handlebars
 function setDashboard(covidData) {
@@ -215,6 +213,11 @@ function setDashboard(covidData) {
     docRequirement.append(docText);
     docEl.append(docRequirement);
 }
+
+
+
+
+
 
 
 // document
