@@ -36,6 +36,15 @@ router.get('/dashboard/:id', async (req, res) => {
     }
 });
 
+// Login route
+router.get('/login', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('login');
+});
+
 // const axios = require('axios');
 // const { Router } = require('express');
 
@@ -111,51 +120,7 @@ router.get('/dashboard/:id', async (req, res) => {
 //   });
 // }
 
-// // // set data to elements to show in dashboard-handlebars
-// // function setDashboard(covidData) {
-// //   console.log(`Filling in the Dashboard data`);
-// //     let countryName = covidData.data.area.name;
-// //     let entryData = covidData.data.areaAccessRestriction.entry;
-// //     let docData = covidData.data.areaAccessRestriction.declarationDocuments;
-// //     let maskData = covidData.data.areaAccessRestriction.mask;
-// //     let diseaseRisk = covidData.data.diseaseRiskLevel;
-
-// //     // let title = document.createElement('h1');
-// //     // title.textContent = countryName;
-// //     // titleEl.append(title);
-
-// //     let riskLvl = document.createElement('h3');
-// //     riskLvl.textContent = "Disease Risk Level"
-// //     let riskText = document.createElement('p');
-// //     riskText.textContent = `${diseaseRisk}`;
-// //     riskLvl.append(riskText);
-// //     riskEl.append(riskLvl);
-
-// //     let entryRestrictions = document.createElement('h3');
-// //     entryRestrictions.textContent = "Entry Restrictions"
-// //     let entryText = document.createElement('p');
-// //     entryText.textContent = `Starting on ${entryData.date}.There is currently a ${entryData.ban} ban in place. ${entryData.text} You can find more information at: ${entryData.rules}`;
-// //     entryRestrictions.append(entryText);
-// //     entryEl.append(entryRestrictions);
-
-// //     let maskRequirement = document.createElement('h3');
-// //     maskRequirement.textContent = "Mask Requirement";
-// //     let maskText = document.createElement('p');
-// //     maskText.textContent = `Starting on ${maskData.date}, there is a ${maskData.isRequired} requirement to wear a mask. ${maskData.text}`;
-// //     maskRequirement.append(maskText);
-// //     maskEl.append(maskRequirement);
-
-// //     let docRequirement = document.createElement('h3');
-// //     docRequirement.textContent = "Documents";
-// //     let docText = document.createElement('p');
-// //     docText.textContent = `Starting on ${docData.date}, ${docData.text}`;
-// //     docRequirement.append(docText);
-// //     docEl.append(docRequirement);
-// // }
-
-
 // // document
 // //   .querySelector('#search-form')
 // //   .addEventListener('submit', searchForm);
 // // Need to create a const for searchForm to call the event listener 
-

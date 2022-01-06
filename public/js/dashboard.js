@@ -4,8 +4,6 @@ const CLIENT_SECRET = `${environment.theClientSecret}`;
 
 
 
-
-
 //variables that will tie to handlebar sections
 //const titleEl = document.querySelector('');
 const entryEl = document.querySelector('.entryContainer');
@@ -137,7 +135,6 @@ function checkIfValid(value){
   }
 
 
-
 // retrieve country's COVID information
 function retrieveCountry(token, searchCountry) {
   console.log(`token has been acquired, fetching COVID data`);
@@ -206,7 +203,7 @@ function setDashboard(covidData) {
     riskEl.append(riskLvl);
 
     let entryRestrictions = document.createElement('h3');
-    entryRestrictions.textContent = "Entry Restrictions"
+    entryRestrictions.textContent = "Entry Restrictions";
     let entryText = document.createElement('p');
     entryText.textContent = `Starting on ${entryData.date}.There is currently a ${entryData.ban} ban in place. ${entryData.text} You can find more information at: ${entryData.rules}`;
     entryRestrictions.append(entryText);
