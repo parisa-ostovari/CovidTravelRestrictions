@@ -155,7 +155,20 @@ function retrieveCountry(token, searchCountry) {
       data : data1
   };
 
-  axios(config)
+  //axios(config)
+  fetch(`https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${searchCountry}`, {
+    method: 'GET', 
+    mode: 'cors', 
+    catch: 'default', 
+    headers: { 
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+      // 'Authorization-Bearer': 'G59rXFmdGmc8q0AF2FyN3j85kKVq', 
+      'Authorization': 'Bearer '+ token
+  }
+  })
+  .then((res)=>{
+    return res.json()
+  })
   .then(function (response) {
       let apiData = response.data;
       // console.log(JSON.stringify(response.data));
@@ -175,11 +188,11 @@ function retrieveCountry(token, searchCountry) {
 // set data to elements to show in dashboard-handlebars
 function setDashboard(covidData) {
   console.log(`Filling in the Dashboard data`);
-    let countryName = covidData.data.area.name;
-    let entryData = covidData.data.areaAccessRestriction.entry;
-    let docData = covidData.data.areaAccessRestriction.declarationDocuments;
-    let maskData = covidData.data.areaAccessRestriction.mask;
-    let diseaseRisk = covidData.data.diseaseRiskLevel;
+    let countryName = covidData.area.name;
+    let entryData = covidData.areaAccessRestriction.entry;
+    let docData = covidData.areaAccessRestriction.declarationDocuments;
+    let maskData = covidData.areaAccessRestriction.mask;
+    let diseaseRisk = covidData.diseaseRiskLevel;
 
     // let title = document.createElement('h1');
     // title.textContent = countryName;
