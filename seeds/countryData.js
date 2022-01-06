@@ -3,7 +3,6 @@ const { Country } = require('../models');
 
 const countryData = [   
     {
-
         countryName: 'France',
         countryCode: 'FR',
         diseaseRisk: 'High',

@@ -4,8 +4,8 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
-const axios = require('axios');
-const cors = require('cors');
+// const axios = require('axios');
+// const cors = require('cors');
 
 
 // Initializes Sequelize with session store
