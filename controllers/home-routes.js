@@ -3,7 +3,6 @@ const { User } = require('../models/');
 const withAuth = require('../utils/auth')
 
 
-
 // Homepage route
 router.get('/', (req, res) => {
 
@@ -20,7 +19,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 })
 
-// 
+// Creating a new user via API Platform
 router.post('/create', async (req, res) => {
   try {
     const dbUser = await User.create({
@@ -34,7 +33,7 @@ router.post('/create', async (req, res) => {
   }
 })
 
-// 
+// Shows all Users via API Platform
 router.get('/get', async (req, res) => {
   try {
     const dbUserData = await User.findAll({
@@ -51,14 +50,13 @@ router.get('/get', async (req, res) => {
 
     })
     return res.json(userData)
-    console.log("shit")
   }
   catch (err) {
     res.status(500).json
   }
 })
 
-// 
+// retrieving data from SQL
 router.get('/get', async (req, res) => {
   try {
     const db = mysql.createConnection(
