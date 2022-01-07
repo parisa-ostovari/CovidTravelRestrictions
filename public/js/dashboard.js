@@ -1,11 +1,8 @@
 const CLIENT_ID = `${environment.theClientID}`;
 const CLIENT_SECRET = `${environment.theClientSecret}`;
-// const country = require('./seeds')
-
-
 
 //variables that will tie to handlebar sections
-//const titleEl = document.querySelector('');
+const titleEl = document.querySelector('.countryName');
 const entryEl = document.querySelector('.entryContainer');
 const docEl = document.querySelector('.docContainer');
 const maskEl = document.querySelector('.maskContainer');
@@ -17,38 +14,43 @@ const formEl = document.querySelector('input[name="search"]');
 const formValue = document.querySelector('#buttonSearch');
 
 // this array will be used to check if the country code that the user puts in currently exists
-const codeArray = ["US","CA","IT","EE","FR"];
+const codeArray = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT",
+"BO","BQ","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CD","CK","CR","CI","HR",
+"CU","CW","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","FK","FO","FJ","FI","FR","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL",
+"GD","GP","GU","GT","GG","GN","GW","GY","HT","HM","VA","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","JM","JP","JE","JO","KZ","KE","KI",
+"KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC",
+"MN","ME","MS","MA","MZ","MM","NA","NR","NP","NL","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PS","PA","PG","PY","PE","PH","PN","PL",
+"PT","PR","QA","RE","RO","RU","RW","BL","SH","KN","LC","MF","PM","VC","WS","SM","ST","SA","SN","RS","SC","SL","SG","SX","SK","SI","SB","SO","ZA","GS",
+"SS","ES","LK","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TL","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM",
+"UY","UZ","VU","VE","VN","VG","VI","WF","EH","YE","ZM","ZW"];
 
 checkForHistory();
 
 //event listener for submit button on searchbar
 formValue.addEventListener("click", function(clicked) {
   clicked.preventDefault();
-  console.log(`button clicked`);
+
   let val = formEl.value.trim();
-  console.log(val);
   val = val.toUpperCase();
-  console.log(val);
+
   let isValidCode = checkIfValid(val);
-  console.log(isValidCode);
+
   if (isValidCode){
-    console.log(`code is valid, in if statement`)
+
     previousCountries.push(val);
     localStorage.setItem("searched Countries", JSON.stringify(previousCountries));  
     // call function to start the API call
     getToken(val);
-
   }
 });
 
 
 // function to check local storage for any previous searches 
 function checkForHistory() {
-  console.log(`Checking for past searches`);
+  
   let pastHistory = localStorage.getItem("countryCodes");
     
   if(pastHistory) { 
-    console.log(`Past searches were found`);
       let pastCountries = JSON.parse(pastHistory); 
       showHistory(pastCountries); 
   } 
@@ -56,7 +58,7 @@ function checkForHistory() {
 
 // function to loop through local storage container
 function showHistory(history) {
-  console.log(`Showing history of past searches`);
+  
   for (let i = 0; i <history.length; i++){
     let countries = history[i];
     createButton(countries);
@@ -65,13 +67,14 @@ function showHistory(history) {
 
 // function to create a button for every country code pulled from local storage
 function createButton(countryCodes) {
-  console.log(`creating buttons for past searches`);
+  
   let newButton = document.createElement("button");
   newButton.className = "btn-info";
   newButton.textContent = countryCodes;
-  //buttonEl.appendChild(newButton);
+  buttonEl.appendChild(newButton);
 
   newButton.addEventListener("click", function (){
+
     console.log(`adding the event listeners to the buttons from localStorage`);
     localStorage.setItem("countryCodes", JSON.stringify(previousCountries));
     //function call
@@ -81,7 +84,9 @@ function createButton(countryCodes) {
 }
 
 function checkIfValid(value){
-  console.log(`Checking if input is valid`);
+  
+  var isValid = false;
+
   if (!value){
     console.log(`input is null`);
     return false;
@@ -93,19 +98,12 @@ function checkIfValid(value){
     return false;
   };
 
-  for (let i = 0; i < codeArray.length ; i++){
-    if (value = codeArray[i]){
-      console.log(`Country code matches`);
-      return true;
-    } else {
-      console.log(`Country code did not match array`);
-      return false;
-    }
-  };
+  isValid = codeArray.includes(value);
+  return isValid;
 }
 
-  function getToken(apiCountry){
-    console.log(`starting api call to get token`);
+function getToken(apiCountry){
+    
     //api body parameters
     var data = 
       `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
@@ -132,7 +130,7 @@ function checkIfValid(value){
     .catch(function (error) {
       console.log(error);
     });
-  }
+}
 
 
 // retrieve country's COVID information
@@ -152,29 +150,20 @@ function retrieveCountry(token, searchCountry) {
       data : data1
   };
 
-  //axios(config)
+
   fetch(`https://test.api.amadeus.com/v1/duty-of-care/diseases/covid19-area-report?countryCode=${searchCountry}`, {
     method: 'GET', 
     mode: 'cors', 
     catch: 'default', 
-    headers: { 
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-      // 'Authorization-Bearer': 'G59rXFmdGmc8q0AF2FyN3j85kKVq', 
+    headers: {  
       'Authorization': 'Bearer '+ token
-  }
+    }
   })
-  .then((res)=>{
+  .then((res)=> {
     return res.json()
   })
   .then(function (response) {
       let apiData = response.data;
-      // console.log(JSON.stringify(response.data));
-      console.log(apiData);
-      //console.log(apiData.data.area.name);
-      //console.log(apiData.data.diseaseRiskLevel);
-      //console.log(apiData.data.areaAccessRestriction.declarationDocuments);
-      //console.log(apiData.data.areaAccessRestriction.entry.text);
-      //console.log(apiData.data.areaAccessRestriction.mask);
       setDashboard(apiData);
   })
   .catch(function (error) {
@@ -184,54 +173,86 @@ function retrieveCountry(token, searchCountry) {
 
 // set data to elements to show in dashboard-handlebars
 function setDashboard(covidData) {
-  console.log(`Filling in the Dashboard data`);
+
     let countryName = covidData.area.name;
+
     let entryData = covidData.areaAccessRestriction.entry;
+    let entryParagraph = entryData.text;
+    entryParagraph = entryParagraph.replace( /(<([^>]+)>)/ig, '');
+    console.log(entryParagraph);
+
     let docData = covidData.areaAccessRestriction.declarationDocuments;
+    let docParagraph = docData.text;
+    docParagraph = entryParagraph.replace( /(<([^>]+)>)/ig, '');
+    console.log(docParagraph);
+
     let maskData = covidData.areaAccessRestriction.mask;
+    let maskParagraph = maskData.text;
+    maskParagraph = entryParagraph.replace( /(<([^>]+)>)/ig, '');
+    console.log(maskParagraph);
     let diseaseRisk = covidData.diseaseRiskLevel;
 
-    // let title = document.createElement('h1');
-    // title.textContent = countryName;
-    // titleEl.append(title);
 
-    let riskLvl = document.createElement('h3');
-    riskLvl.textContent = "Disease Risk Level"
+    let title = document.createElement('h1');
+     title.textContent = countryName;
+     titleEl.append(title);
+
+    let riskLvl = document.createElement('h5');
+    riskLvl.textContent = "Disease Risk Level";
+    riskLvl.className = "card-title";
+    console.log(riskLvl);
+
     let riskText = document.createElement('p');
     riskText.textContent = `${diseaseRisk}`;
-    riskLvl.append(riskText);
+    riskText.className = "card-text";
+
+    console.log(riskText);
+
     riskEl.append(riskLvl);
+    riskEl.append(riskText);
 
-    let entryRestrictions = document.createElement('h3');
+    let entryRestrictions = document.createElement('h5');
     entryRestrictions.textContent = "Entry Restrictions";
+    entryRestrictions.className = "card-title";
+    console.log(entryRestrictions);
+
     let entryText = document.createElement('p');
-    entryText.textContent = `Starting on ${entryData.date}.There is currently a ${entryData.ban} ban in place. ${entryData.text} You can find more information at: ${entryData.rules}`;
-    entryRestrictions.append(entryText);
+    entryText.textContent = `Starting on ${entryData.date}. There is currently a ${entryData.ban} ban in place. ${entryParagraph}`;
+    entryText.className = "card-text";
+    let entryLink = document.createElement('a');
+    entryLink.textContent = `You can find more information here`;
+    entryLink.setAttribute("target", "_blank");
+    entryLink.setAttribute("href", `${entryData.rules}`)
+
     entryEl.append(entryRestrictions);
+    entryEl.append(entryText);
+    entryEl.append(entryLink);
 
-    let maskRequirement = document.createElement('h3');
+    let maskRequirement = document.createElement('h5');
     maskRequirement.textContent = "Mask Requirement";
+    maskRequirement.className = "card-title";
+    console.log(maskRequirement);
+
+    let maskReq = document.createElement('p');
+    maskReq.textContent = `Effective on ${maskData.date}. \n Mask requirement: ${maskData.isRequired}.`;
+    maskReq.className = "card-text";
+
     let maskText = document.createElement('p');
-    maskText.textContent = `Starting on ${maskData.date}, there is a ${maskData.isRequired} requirement to wear a mask. ${maskData.text}`;
-    maskRequirement.append(maskText);
+    maskText.textContent = `${maskParagraph}`;
+    maskText.className = "card-text";
+  
     maskEl.append(maskRequirement);
+    maskEl.append(maskReq);
+    maskEl.append(maskText);
 
-    let docRequirement = document.createElement('h3');
+    let docRequirement = document.createElement('h5');
     docRequirement.textContent = "Documents";
+    docRequirement.className = "card-title";
+
     let docText = document.createElement('p');
-    docText.textContent = `Starting on ${docData.date}, ${docData.text}`;
-    docRequirement.append(docText);
+    docText.textContent = `Starting on ${docData.date}, ${docParagraph}`;
+    docText.className = "card-text";
+
     docEl.append(docRequirement);
+    docEl.append(docText);
 }
-
-
-
-
-
-
-
-// document
-//   .querySelector('#search-form')
-//   .addEventListener('submit', searchForm);
-// Need to create a const for searchForm to call the event listener 
-
