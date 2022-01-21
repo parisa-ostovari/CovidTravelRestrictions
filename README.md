@@ -1,5 +1,8 @@
 # Covid-travel-search
 
+## Live Application Link
+https://intense-mesa-45226.herokuapp.com/
+
 ## Table of Contents
 - [Description](#description)
 - [Installation](#installation)
